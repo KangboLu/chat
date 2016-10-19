@@ -10,7 +10,6 @@ class ChatInput extends React.Component {
     this.state = {
       messageText: '',
       isTyping: false,
-      user: null,
     };
     this.handleInputFocus = this.handleInputFocus.bind(this);
     this.handleInputBlur = this.handleInputBlur.bind(this);
@@ -25,10 +24,6 @@ class ChatInput extends React.Component {
 
 
   componentWillMount() {
-    // eslint-disable-next-line
-    Bebo.User.getUser('me', (err, data) => {
-      this.setState({ user: data });
-    });
   }
 
   componentDidMount() {
@@ -66,10 +61,10 @@ class ChatInput extends React.Component {
     if (!this.state.isTyping) {
       this.setState({ isTyping: true });
       // eslint-disable-next-line
-      Bebo.Room.emitEvent({ presence: { started_typing: this.state.user.user_id } });
+      Bebo.Room.emitEvent({ presence: { started_typing: this.props.me.user_id } });
       this.typingInterval = setInterval(() => {
         // eslint-disable-next-line
-        Bebo.Room.emitEvent({ type: 'chat_presence', presence: { started_typing: this.state.user.user_id } });
+        Bebo.Room.emitEvent({ type: 'chat_presence', presence: { started_typing: this.props.me.user_id } });
       }, 3000);
     }
     this.isTypingTimeout = setTimeout(this.stoppedTyping, 3000);
@@ -83,7 +78,7 @@ class ChatInput extends React.Component {
   stoppedTyping() {
     clearInterval(this.typingInterval);
     // eslint-disable-next-line
-    Bebo.Room.emitEvent({ type: 'chat_presence', presence: { stopped_typing: this.state.user.user_id } });
+    Bebo.Room.emitEvent({ type: 'chat_presence', presence: { stopped_typing: this.props.me.user_id } });
     this.setState({ isTyping: false });
   }
 
@@ -98,8 +93,8 @@ class ChatInput extends React.Component {
       const message = {
         id: uuid.v4(),
         type: 'message',
-        username: this.state.user.username,
-        user_id: this.state.user.user_id,
+        username: this.props.me.username,
+        user_id: this.props.me.user_id,
         message: text,
         users: [],
       };

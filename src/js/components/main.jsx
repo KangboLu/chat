@@ -19,14 +19,24 @@ class App extends React.Component {
     };
     this.blurInput = this.blurInput.bind(this);
     this.handleSwitchMode = this.handleSwitchMode.bind(this);
+    this.getMe = this.getMe.bind(this);
+    this.delay = 0;
   }
 
   componentWillMount() {
     // eslint-disable-next-line
-    Bebo.User.get('me', (err, resp) => {
-      if (err) { return console.error(err); }
-      this.setState({ actingUser: resp });
-      return null;
+    this.getMe();
+  }
+
+  getMe() {
+    var that = this;
+    Bebo.User.get('me')
+    .then(function(user) {
+      that.setState({ actingUser: user});
+      if (!user.username) {
+        that.delay += 500;
+        setTimeout(that.getMe, that.delay);
+      }
     });
   }
 
@@ -61,7 +71,7 @@ class App extends React.Component {
         <ChatBackground />
       </div>
       <div className="chat-lower" style={this.state.mode === 'gif' ? { transform: 'translate3d(40vw,0,0)' } : {}}>
-        <ChatInput blurChat={this.state.blurInput} switchMode={this.handleSwitchMode} setChatInputState={this.blurInput} />
+        <ChatInput me={this.state.actingUser} blurChat={this.state.blurInput} switchMode={this.handleSwitchMode} setChatInputState={this.blurInput} />
       </div>
       {(giphyOpen || giphyClosing || this.state.mode === 'gif') && <GiphyBrowser style={giphyOpen ? { transform: 'translate3d(0,0,0)' } : {}} actingUser={this.state.actingUser} switchMode={this.handleSwitchMode} />}
     </div>);
