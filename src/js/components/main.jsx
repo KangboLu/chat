@@ -4,8 +4,6 @@ import ChatBackground from './chat-background.jsx';
 import ChatInput from './chat-input.jsx';
 import GiphyBrowser from './giphy-browser.jsx';
 
-import '../../css/_main.scss';
-
 class App extends React.Component {
 
   constructor() {

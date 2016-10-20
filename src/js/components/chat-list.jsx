@@ -1,7 +1,6 @@
 import React from 'react';
 import ChatItem from './chat-item.jsx';
 
-import '../../css/_chat-list.scss';
 import uuid from 'node-uuid';
 
 const COUNT=30;
@@ -158,7 +157,7 @@ class ChatList extends React.Component {
     Bebo.Db.get('messages', options)
       .then(function (data) {
         var hasMore;
-        if (options.count) { 
+        if (options.count) {
           hasMore = data.result.length === options.count;
         }
         var state = {};

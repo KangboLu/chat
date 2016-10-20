@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../css/_chat-input.scss'
 import uuid from 'node-uuid'
 
 

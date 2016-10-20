@@ -3,8 +3,6 @@ import GiphyGif from './giphy-gif.jsx';
 import SimpleFetch from 'react-simple-fetch';
 import Cluster from 'react-cluster';
 
-import '../../css/_giphy-browser.scss';
-
 const loader = function loader() {
   return (<div className="loader">
     <svg version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 81 45" >

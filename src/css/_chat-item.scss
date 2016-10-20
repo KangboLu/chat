@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// CHAT ITEM STYLING
+
 .chat-item {
   width:100%;
   flex: 0 0 auto;
@@ -6,10 +9,6 @@
     padding-bottom: calc-em(10px)!important;
   }
 }
-
-// .chat-item:first-child {
-//   padding-top: 12vh;
-// }
 
 .chat-item--inner {
   width:100%;
@@ -67,7 +66,7 @@
 
 .chat-item--inner--meta--time {
   @extend .font-size-tiny;
-  font-family: $chat-family;
+  font-family: $font-family-alt;
   flex: 0 0 auto;
   font-weight: 400;
   margin-left: calc-em(5px);
@@ -85,7 +84,7 @@
 .chat-item--inner--message--content {
   font-size: calc-em(15px);
   color:$color-black;
-  font-family: $chat-family;
+  font-family: $font-family-alt;
   width:100%;
   position:relative;
   word-wrap: break-word;
@@ -94,11 +93,111 @@
   max-width: 80vw;
   margin: 1px 0;
   user-select:text;
-  * {
-    font-family: $chat-family;
-  }
   @include r_max($break-tablet-s) {
     font-size: calc-em(16px);
+  }
+  *:last-child {
+    margin-bottom: 0 !important;
+  }
+  * {
+    font-family: $font-family-alt;
+    -webkit-user-select: text;  /* Chrome 49+ */
+    -moz-user-select: text;     /* Firefox 43+ */
+    -ms-user-select: text;      /* No support yet */
+    user-select: text;          /* Likely future */
+  }
+  h1 {
+    @extend .font-size-huge;
+    font-weight: 700;
+    margin-bottom: calc-em(5px);
+  }
+  h2 {
+    @extend .font-size-large;
+    margin-bottom: calc-em(10px);
+    font-style: italic;
+    font-family: Georgia, serif;
+    color: $color-grey5;
+  }
+  h3 {
+    @extend .font-size-medium;
+    margin-bottom: calc-em(5px);
+    font-weight: 700;
+  }
+  h4 {
+    @extend .font-size-default;
+    margin-bottom: calc-em(5px);
+    font-weight: 700;
+  }
+  h5 {
+    @extend .font-size-default;
+    margin-bottom: calc-em(5px);
+    font-style: italic;
+  }
+  p {
+    @extend .font-size-default;
+    margin-bottom: calc-em(15px);
+  }
+  a {
+    color: $color-blue;
+  }
+  small {
+    @extend .font-size-small;
+  }
+  blockquote {
+    border-left: 4px solid $color-grey2;
+    padding-left: calc-em(15px);
+    margin: 0 0 calc-em(15px) 0;
+    * {
+      font-style: italic;
+      font-family: Georgia, serif;
+    }
+  }
+  pre {
+    @extend .font-size-tiny;
+    line-height: 1.2;
+    font-family: "Courier 10 Pitch", Courier, monospace;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    height:1%;
+    width: auto;
+    display: block;
+    clear: both;
+    color: $color-grey5;
+    padding: calc-em(15px);
+    margin: calc-em(5px) calc-em(15px) calc-em(15px);
+    background: $color-grey1;
+    border: solid 1px $color-grey3;
+  }
+  code {
+    @extend .font-size-tiny;
+    line-height: 1.2;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    display: inline;
+    color: $color-grey5;
+  }
+  ul {
+    list-style-type: disc;
+    list-style-position: outside;
+    margin: 0 0 calc-em(15px) calc-em(20px);
+    li {
+    }
+    ul {
+      list-style-type: circle;
+      list-style-position: outside;
+      margin-bottom: calc-em(5px);
+    }
+  }
+  ol {
+    list-style-type: decimal;
+    list-style-position: outside;
+    margin: 0 0 calc-em(15px) calc-em(20px);
+    ul {
+      list-style-type: circle;
+      list-style-position: outside;
+      margin-bottom: calc-em(5px);
+    }
   }
 }
 

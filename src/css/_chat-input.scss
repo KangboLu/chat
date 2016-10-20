@@ -1,16 +1,10 @@
-@import "colors";
-@import "typography";
-
 //////////////////////////////////////////////////////////////////////////////////////////
 // CHAT INPUT STYLING
 
 .chat-input {
   width:100%;
-  display: flex;
-  flex-direction:row;
-  justify-content:center;
-  align-items:center;
-  border-top: 1px solid $color-light-grey;
+  @extend .flex-row;
+  border-top: 1px solid $color-grey3;
   background-color:$color-white;
 }
 
@@ -50,7 +44,7 @@
 
 .chat-input--middle input {
   @extend .font-size-default;
-  font-family: $chat-family;
+  font-family: $font-family-alt;
   width:100%;
   background-color: transparent;
   border:none;
@@ -58,17 +52,17 @@
   max-height: calc-em(80px);
   flex: 0 0 auto;
   padding: 0.2em 0 0.3em;
-  color: $color-dark-grey;
+  color: $color-grey8;
   line-height: 1;
   padding-right: 40px;
   &::-webkit-input-placeholder {
-    color:$color-grey;
+    color:$color-grey5;
   }
 }
 
 .chat-input--middle textarea {
   @extend .font-size-default;
-  font-family: $chat-family;
+  font-family: $font-family-alt;
   width:100%;
   background-color: transparent;
   border:none;
@@ -76,22 +70,22 @@
   max-height: calc-em(80px);
   flex: 0 0 auto;
   padding: 0.2em 0 0.3em;
-  color: $color-dark-grey;
+  color: $color-grey8;
   line-height: 1;
   padding-right: 40px;
   &::-webkit-input-placeholder {
-    color:$color-grey;
+    color:$color-grey5;
   }
 }
 
 .chat-input--send-btn {
   pointer-events:none;
-  color:$chat-input-send;
+  color:$color-green;
   padding:0;
 }
 
 .chat-input--send-btn:disabled {
-  color:$chat-input-send-disbled;
+  color: $color-grey3;
 }
 
 // actions
