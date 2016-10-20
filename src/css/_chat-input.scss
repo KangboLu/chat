@@ -66,6 +66,24 @@
   }
 }
 
+.chat-input--middle textarea {
+  @extend .font-size-default;
+  font-family: $chat-family;
+  width:100%;
+  background-color: transparent;
+  border:none;
+  height:100%;
+  max-height: calc-em(80px);
+  flex: 0 0 auto;
+  padding: 0.2em 0 0.3em;
+  color: $color-dark-grey;
+  line-height: 1;
+  padding-right: 40px;
+  &::-webkit-input-placeholder {
+    color:$color-grey;
+  }
+}
+
 .chat-input--send-btn {
   pointer-events:none;
   color:$chat-input-send;

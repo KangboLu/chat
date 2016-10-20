@@ -9,6 +9,7 @@ class ChatInput extends React.Component {
     super();
     this.state = {
       messageText: '',
+      multiLine: false,
       isTyping: false,
     };
     this.handleInputFocus = this.handleInputFocus.bind(this);
@@ -48,9 +49,13 @@ class ChatInput extends React.Component {
 
   blockEnterKey(e) {
     if (e.keyCode === 13 && this.state.messageText && this.state.messageText.length) {
-      this.handleSendChat(e);
-      e.preventDefault();
-    } else if(e.keyCode === 13) {
+      if (e.shiftKey || Bebo.Utils.isMobile()) {
+        this.setState({multiLine: true});
+      } else {
+        this.handleSendChat(e);
+        e.preventDefault();
+      }
+    } else if (e.keyCode === 13) {
       this.refs.textarea.blur();
       e.preventDefault();
     }
@@ -108,7 +113,7 @@ class ChatInput extends React.Component {
     }
   }
   resetTextarea() {
-    this.setState({ messageText: '' });
+    this.setState({ messageText: '', multiLine: false });
   }
   broadcastChat(err, data) {
     if (err) {
@@ -156,16 +161,21 @@ class ChatInput extends React.Component {
   }
 
   render() {
+    var rows="1";
+    if (this.state.multiLine) {
+      rows="2";
+    }
     return (<div className="chat-input" style={this.state.mode === 'gif' ? { transform: 'translate3d(0,-100vh, 0' } : {}}>
       <div className="chat-input--left">
         {this.renderActions()}
       </div>
       <div className="chat-input--middle">
-        <input
+        <textarea
           type="text"
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}
           ref="textarea"
+          rows={rows}
           placeholder="type a message.."
           onChange={this.handleInputChange}
           value={this.state.messageText}

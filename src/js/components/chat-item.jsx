@@ -2,6 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import Linkify from '../utils/better-linkify';
 
+import Remarkable from 'remarkable';
+
+var md = new Remarkable({html: false,
+                         breaks: true,
+                         linkify: true});
+
 class ChatItem extends React.Component {
 
   constructor() {
@@ -100,8 +106,12 @@ class ChatItem extends React.Component {
         </div>
       </span>);
     }
-    return <Linkify properties={{onClick: this.handleLinkClick}} className="chat-item--inner--message--content">{this.props.item.message}</Linkify>;
-    // return <div onClick={this.handleLinkClick} className="chat-item--inner--message--content">{this.props.item.message}</div>;
+
+    var message = {__html: md.render(this.props.item.message)};
+    return <div className="chat-item--inner--message--content"
+                onClick={this.handleLinkClick} 
+                dangerouslySetInnerHTML={message}>
+           </div>
   }
 
   render() {

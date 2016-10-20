@@ -223,7 +223,9 @@ class ChatList extends React.Component {
   }
 
   handleMessageEvent(message) {
-    this.store.push(message);
+    this.store = _.unionBy([message], this.store, "id");
+    this.store = _.orderBy(this.store, "created_dttm", "asc");
+
     if (!this.state.scrolledPastFirstMessage) {
       this.addNewMessages([message]);
       if (message.user_id === this.props.actingUser.user_id) {
@@ -305,7 +307,7 @@ class ChatList extends React.Component {
 
   renderNoChatsMessage() {
     if (!this.state.messages || this.state.messages.length === 0) {
-      return <div className="chat-list--no-messages" />;
+      return <div key="nope" className="chat-list--no-messages" />;
     }
   }
 
@@ -333,7 +335,11 @@ class ChatList extends React.Component {
       <div ref="chatListInner" className="chat-list--inner" onScroll={this.handleScroll} onClick={this.handleListClick}>
         <ul ref="chats" className="chat-list--inner--list">
           {hasMore ?  <li style={{clear: 'both'}} className="">Loading ...</li> : ""}
-          {messages.map((item, i) => <ChatItem isAnchor={item.id===this.anchor_id} onAnchorRef={this.onAnchorRef} handleNewMessage={this.handleNewMessage} item={item} prevItem={messages[i - 1] || {}} key={item.id} />)}
+          {messages.map((item, i) => <ChatItem isAnchor={item.id===this.anchor_id}
+            onAnchorRef={this.onAnchorRef}
+            handleNewMessage={this.handleNewMessage}
+            item={item} prevItem={messages[i - 1] || {}}
+            key={item.id} />)}
           {this.renderNoChatsMessage}
         </ul>
       </div>
