@@ -4,14 +4,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // CHAT INPUT STYLING
 
-.chat-lower {
-  position:relative;
-  width:100%;
-  flex: 0 0 auto;
-  background-color: $chat-lower;
-  transition: all 333ms ease;
-}
-
 .chat-input {
   width:100%;
   display: flex;

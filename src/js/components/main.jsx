@@ -66,11 +66,11 @@ class App extends React.Component {
     const giphyOpen = this.state.open === true;
     const giphyClosing = this.state.closing === true;
     return (<div className="chat">
-      <div className="chat-upper" style={this.state.mode === 'gif' ? { transform: 'translate3d(40vw,0,0)' } : {}}>
+      <div className="chat-upper" style={this.state.mode === 'gif' ? { transform: 'translate3d(8.125rem,0,0)' } : {}}>
         <ChatList blurChat={this.blurInput} actingUser={this.state.actingUser} />
         <ChatBackground />
       </div>
-      <div className="chat-lower" style={this.state.mode === 'gif' ? { transform: 'translate3d(40vw,0,0)' } : {}}>
+      <div className="chat-lower" style={this.state.mode === 'gif' ? { transform: 'translate3d(8.125rem,0,0)' } : {}}>
         <ChatInput me={this.state.actingUser} blurChat={this.state.blurInput} switchMode={this.handleSwitchMode} setChatInputState={this.blurInput} />
       </div>
       {(giphyOpen || giphyClosing || this.state.mode === 'gif') && <GiphyBrowser style={giphyOpen ? { transform: 'translate3d(0,0,0)' } : {}} actingUser={this.state.actingUser} switchMode={this.handleSwitchMode} />}

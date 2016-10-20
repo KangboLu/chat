@@ -1,0 +1,12 @@
+//////////////////////////////////////////////////////////////////////////////////////////
+// BUTTONS
+
+.back-btn {
+  width: calc-em(44px);
+  height: calc-em(44px);
+  background-size: calc-em(16px);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url(./assets/img/backBtn.png);
+  cursor: pointer;
+}

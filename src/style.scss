@@ -1,11 +1,14 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // IMPORTS
 
-@import "./css/reset";
-@import "./css/mixins";
-@import "./css/colors";
-@import "./css/typography";
+@import "./css/bebo-style/mixins";
+@import "./css/bebo-style/reset";
+@import "./css/bebo-style/layout";
+@import "./css/bebo-style/colors";
+@import "./css/bebo-style/typography";
+@import "./css/bebo-style/buttons";
 
+@import "./css/chat-layout";
 @import "./css/chat-input";
 @import "./css/chat-list";
 @import "./css/chat-item";
@@ -25,7 +28,7 @@ body, html {
   left:0;
 }
 
-#app {
+#root {
   position:absolute;
   background-color:#FFF;
   width:100%;
@@ -38,33 +41,7 @@ body, html {
   max-width: 100vw;
 }
 
-.chat {
-  display:flex;
-  flex-direction: column;
-  width:100%;
-  height:100%;
-  position: relative;
-  top:0;
-  left:0;
-  background-color: $chat-bg;
-}
 
-.chat-users {
-  position:fixed;
-  top:10%;
-  height:80%;
-  display:block;
-  width:60px;
-  right:0;
-  background-color:red;
-}
-
-.chat-reactions {
-  padding-left: 5%;
-  height: 10px;
-  width: 100%;
-  padding-bottom: 10%;
-}
 
 button {
   background-color:transparent;
@@ -72,48 +49,48 @@ button {
 }
 
 .initial-load-container {
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	background: #FFFFFF;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: #FFFFFF;
 }
 
 .loader {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin-left: -50px;
-	margin-top: -50px;
-	width: 100px;
-	text-align: center;
-	font-size: 1.2em;
-	color: #555;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  width: 100px;
+  text-align: center;
+  font-size: 1.2em;
+  color: #555;
 }
 
 $delays: 0 125ms 250ms .375s;
 @for $i from 1 through 4 {
-	.circle#{$i} {
-		animation: bounce linear 2.2s infinite forwards;
-		animation-delay: nth($delays, $i);
-	}
+  .circle#{$i} {
+    animation: bounce linear 2.2s infinite forwards;
+    animation-delay: nth($delays, $i);
+  }
 }
 
 @keyframes bounce {
-	0%, 100% {
-		transform: translateY(0);
-	}
-	20%, 50% {
-		transform: translateY(9px);
-	}
-	80% {
-		transform: translateY(2px)
-	}
-	40% {
-		transform: translateY(-15px);
-	}
-	60% {
-		transform: translateY(-7px);
-	}
+  0%, 100% {
+    transform: translateY(0);
+  }
+  20%, 50% {
+    transform: translateY(9px);
+  }
+  80% {
+    transform: translateY(2px)
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-7px);
+  }
 }

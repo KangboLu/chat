@@ -1,6 +1,3 @@
-@import "colors";
-@import "typography";
-
 .chat-item {
   width:100%;
   flex: 0 0 auto;
@@ -45,7 +42,7 @@
   display:block;
   width: calc-em(36px);
   height: calc-em(36px);
-  background-color: $chat-avatar;
+  background-color: $color-grey2;
   margin: 0 calc-em(13px);
   border-radius: calc-em(8px);
   overflow:hidden;
@@ -59,40 +56,50 @@
 
 .chat-item--inner--meta--username {
   flex: 0 0 auto;
-  font-weight: 600;
+  font-weight: 700;
   color: $color-dark-grey;
+  font-family: $font-family-alt;
+  font-size: calc-em(15px);
+  @include r_max($break-tablet-s) {
+    font-size: calc-em(16px);
+  }
 }
 
 .chat-item--inner--meta--time {
-  @extend .font-size-small;
+  @extend .font-size-tiny;
   font-family: $chat-family;
   flex: 0 0 auto;
   font-weight: 400;
   margin-left: calc-em(5px);
   color: $color-medium-grey;
   position: relative;
-  top: -2px;
 }
 
 .chat-item--inner--message {
   width:100%;
   flex: 0 0 auto;
-  padding:0;
-  margin-top: calc-em(1px);
+  padding: calc-em(1px) 0 calc-em(2px);
+  margin: calc-em(1px) 0;
 }
 
 .chat-item--inner--message--content {
-  @extend .font-size-default;
-  color:$color-dark-grey;
+  font-size: calc-em(15px);
+  color:$color-black;
   font-family: $chat-family;
   width:100%;
   position:relative;
   word-wrap: break-word;
-  line-height: 1.45;
+  line-height: 1.375;
   display: block;
   max-width: 80vw;
   margin: 1px 0;
   user-select:text;
+  * {
+    font-family: $chat-family;
+  }
+  @include r_max($break-tablet-s) {
+    font-size: calc-em(16px);
+  }
 }
 
 

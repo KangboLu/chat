@@ -2,8 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import Linkify from '../utils/better-linkify';
 
-import '../../css/_chat-item.scss';
-
 class ChatItem extends React.Component {
 
   constructor() {
