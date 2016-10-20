@@ -56,7 +56,7 @@
 .chat-item--inner--meta--username {
   flex: 0 0 auto;
   font-weight: 700;
-  color: $color-dark-grey;
+  color: $color-grey8;
   font-family: $font-family-alt;
   font-size: calc-em(15px);
   @include r_max($break-tablet-s) {
@@ -70,7 +70,7 @@
   flex: 0 0 auto;
   font-weight: 400;
   margin-left: calc-em(5px);
-  color: $color-medium-grey;
+  color: $color-grey5;
   position: relative;
 }
 

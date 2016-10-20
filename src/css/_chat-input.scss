@@ -64,6 +64,7 @@
   @extend .font-size-default;
   font-family: $font-family-alt;
   width:100%;
+  resize: none;
   background-color: transparent;
   border:none;
   height:100%;

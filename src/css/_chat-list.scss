@@ -1,12 +1,10 @@
-@import "colors";
-
 //////////////////////////////////////////////////////////////////////////////////////////
-// CHAT MESSAGES STYLING
+// CHAT LIST STYLING
 
+.loading {
 
+}
 
-// The double nesting of lists hers is bevause if we ever wanted
-//  to support Firefox on web well.
 .chat-list {
   position: absolute;
   top: 0;
@@ -41,7 +39,7 @@
 // unseen messages
 .chat-list--unseen-messages {
   width: 100%;
-  background-color: $chat-list-unseen-messages;
+  background-color: $color-blue;
   bottom: 0;
   padding: 8px;
   text-align: center;
