@@ -1,6 +1,10 @@
 import React from 'react';
 import uuid from 'node-uuid'
 
+import Remarkable from 'remarkable';
+import striptags from 'striptags';
+
+var md = new Remarkable({html: false, breaks: false, linkify: false});
 
 class ChatInput extends React.Component {
 
@@ -121,7 +125,14 @@ class ChatInput extends React.Component {
     }
     const m = data.result[0];
     // eslint-disable-next-line
-    Bebo.Notification.roster('{{{user.username}}}:', m.message, []);
+    var message = m.message.trim();
+    message = _.split(message, "\n");
+    message = message[0];
+    if (message && message.length > 0) {
+      message = md.render(message);
+      message = striptags(message);
+      Bebo.Notification.roster('{{{user.username}}}:', message, []);
+    }
     // eslint-disable-next-line
     Bebo.Room.emitEvent({ type: 'chat_sent', message: m });
     this.stoppedTyping();
