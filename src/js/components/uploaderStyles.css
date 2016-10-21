@@ -1,0 +1,71 @@
+.bebo-uploader {
+
+}
+
+.bebo-uploader-image--uploading {
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.bebo-uploader-overlay {
+    margin: auto;
+    height: 70%;
+    width: 70%;
+}
+
+$white: rgb(255,255,255);
+$off-white: rgba($white, 0.2);
+$spin-duration: 1s;
+$pulse-duration: 750ms;
+
+/* @keyframes :global(spin) { */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.bebo-uploader--spinner {
+    z-index: 100;
+    border-radius: 50%;
+    width: 30%;
+    max-width: 96px;
+    height: 30%;
+    max-height: 96px;
+    border: .25rem solid rgba(255,255,255,0.2);
+    border-top-color: rgb(255,255,255);
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: initial;
+    animation-iteration-count: infinite;
+    animation-direction: initial;
+    animation-fill-mode: initial;
+    animation-play-state: initial;
+}
+
+/* https://github.com/search?q=org%3Abebo-rooms+getRoster&type=Code */
+/* .bebo-uploader--spinner :global { animation-name: spin; } */
+.bebo-uploader--spinner :global { animation-name: bebo-uploader-spin; }
+
+.bebo-uploader--delete {
+  position: absolute;
+  border-radius: 50%;
+  color: black;
+  background-color: black;
+  width: 24px;
+  height: 24px;
+  z-index: 101;
+  right: 7%;
+  top: 7%;
+}
+
+.bebo-uploader--delete svg {
+  display: block;
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  left:50%;
+  top:50%;
+  margin-left: -6px;
+  margin-top: -6px;
+}

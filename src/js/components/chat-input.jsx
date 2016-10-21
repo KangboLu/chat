@@ -3,6 +3,7 @@ import uuid from 'node-uuid'
 
 import Remarkable from 'remarkable';
 import striptags from 'striptags';
+import Uploader from './uploader.jsx';
 
 var md = new Remarkable({html: false, breaks: false, linkify: false});
 
@@ -14,6 +15,7 @@ class ChatInput extends React.Component {
       messageText: '',
       multiLine: false,
       isTyping: false,
+      media: []
     };
     this.handleInputFocus = this.handleInputFocus.bind(this);
     this.handleInputBlur = this.handleInputBlur.bind(this);
@@ -24,6 +26,8 @@ class ChatInput extends React.Component {
     this.handleActionGIF = this.handleActionGIF.bind(this);
     this.broadcastChat = this.broadcastChat.bind(this);
     this.handleSendChat = this.handleSendChat.bind(this);
+    this.handleMedia = this.handleMedia.bind(this);
+    this.handleUploading = this.handleUploading.bind(this);
   }
 
 
@@ -48,6 +52,11 @@ class ChatInput extends React.Component {
   componentWillUnmount() {
     document.removeEventListener('keydown', this.blockEnterKey);
     this.stoppedTyping();
+  }
+
+  handleUploading() {
+    console.log("editor uploading");
+    this.setState({uploading: true});
   }
 
   blockEnterKey(e) {
@@ -90,6 +99,24 @@ class ChatInput extends React.Component {
     this.setState({ isTyping: false });
   }
 
+  handleMedia(media) {
+    console.log("got media - need to post", media);
+    var medium = media[0];
+    this.setState({uploading: false, media: []});
+    const image = {
+      url: medium.url,
+      width: medium.width,
+      height: medium.height
+    };
+    const message = {
+      id: uuid.v4(),
+      image: image,
+      username: this.props.me.username,
+      user_id: this.props.me.user_id,
+      type: 'image',
+    };
+    Bebo.Db.save('messages', message, this.broadcastChat);
+  }
 
   handleSendChat(e) {
     //this.refs.textarea.focus();
@@ -118,6 +145,7 @@ class ChatInput extends React.Component {
   resetTextarea() {
     this.setState({ messageText: '', multiLine: false });
   }
+
   broadcastChat(err, data) {
     if (err) {
       console.log('error', err);
@@ -125,9 +153,15 @@ class ChatInput extends React.Component {
     }
     const m = data.result[0];
     // eslint-disable-next-line
-    var message = m.message.trim();
-    message = _.split(message, "\n");
-    message = message[0];
+    var message;
+    if (data.type === 'message') {
+      message  = m.message.trim();
+      message = _.split(message, "\n");
+      message = message[0];
+    } else if (data.type === 'image') {
+      message = "sent a new image";
+    }
+    
     if (message && message.length > 0) {
       message = md.render(message);
       message = striptags(message);
@@ -190,6 +224,14 @@ class ChatInput extends React.Component {
           onChange={this.handleInputChange}
           value={this.state.messageText}
         />
+        <Uploader ref="uploader"
+          value={this.state.media}
+          multiple={false}
+          onBusy={this.handleUploading}
+          onChange={this.handleMedia}
+          showButton={true}
+          itemClassName="media-upload-container"
+          className="media-upload-media"/>
         <div onTouchStart={this.handleSendChat} onMouseDown={this.handleSendChat} className="send-button" style={this.calculateSendBtnStyle()}>
           <span>Send</span>
         </div>

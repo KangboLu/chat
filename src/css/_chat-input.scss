@@ -107,3 +107,15 @@
   top:0;
   left:0;
 }
+
+.media-upload-container {
+    background-size: cover;
+    height: 32px;
+    width: 32px; 
+}
+
+.media-upload-container svg {
+    object-fit: contain;
+    height: 32px;
+    width: 32px; 
+}
