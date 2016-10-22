@@ -208,12 +208,16 @@ class Upload extends React.Component {
   }
 
   renderButton() {
-    var itemClassName = ((this.props.itemClassName && " " + this.props.itemClassName) || "");
-    if (this.props.showButton && this.isAllDone(this.media)) {
-      return <div className={itemClassName} onClick={()=>this.onClick()}>
-              {cameraSvg}
-             </div>;
+    if (!this.props.showButton) {
+      return;
     }
+    var itemClassName = ((this.props.itemClassName && " " + this.props.itemClassName) || "");
+    if (!this.props.multiple && this.state.media !== null && this.state.media.length > 0) {
+      return;
+    }
+    return <div className={itemClassName} onClick={()=>this.onClick()}>
+            {cameraSvg}
+           </div>;
   }
 
   renderMedium(m) {

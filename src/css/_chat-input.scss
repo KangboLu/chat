@@ -1,6 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // CHAT INPUT STYLING
 
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(221,221,221);
+  z-index: 1000000;
+  margin-bottom: calc-em(20px);
+  overflow-x: scroll;
+}
+
+.modal-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left:0;
+  top:0;
+  background-color: rgb(221,221,221);
+  z-index: 1;
+}
+
 .chat-input {
   width:100%;
   @extend .flex-row;

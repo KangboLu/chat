@@ -334,9 +334,11 @@ class ChatList extends React.Component {
       <div ref="chatListInner" className="chat-list--inner" onScroll={this.handleScroll} onClick={this.handleListClick}>
         <ul ref="chats" className="chat-list--inner--list">
           {hasMore ?  <li style={{clear: 'both'}} className="loading">Loading ...</li> : ""}
-          {messages.map((item, i) => <ChatItem isAnchor={item.id===this.anchor_id}
+          {messages.map((item, i) => <ChatItem
+            isAnchor={item.id===this.anchor_id}
             onAnchorRef={this.onAnchorRef}
             handleNewMessage={this.handleNewMessage}
+            viewPhoto={this.props.viewPhoto}
             item={item} prevItem={messages[i - 1] || {}}
             key={item.id} />)}
           {this.renderNoChatsMessage}
@@ -347,11 +349,12 @@ class ChatList extends React.Component {
 
   render() {
     const count = this.state.usersTypingCount;
-    return (<div className="chat-list">
-      {this.renderMessagesBadge()}
-      {this.renderChatList()}
-      {this.renderUsersAreTyping()}
-    </div>);
+    return (
+      <div className="chat-list">
+        {this.renderMessagesBadge()}
+        {this.renderChatList()}
+        {this.renderUsersAreTyping()}
+      </div>);
   }
 
 }

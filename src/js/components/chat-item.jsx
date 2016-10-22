@@ -20,6 +20,7 @@ class ChatItem extends React.Component {
     this.renderAvatar = this.renderAvatar.bind(this);
     this.renderTimestamp = this.renderTimestamp.bind(this);
     this.renderContent = this.renderContent.bind(this);
+    this.viewPhoto = this.viewPhoto.bind(this);
   }
 
   componentWillMount() {
@@ -93,6 +94,10 @@ class ChatItem extends React.Component {
     return m.format('LT');
   }
 
+  viewPhoto(e) {
+    this.props.viewPhoto({"mediaUrl": e.currentTarget.dataset.mediaUrl});
+  }
+
   renderContent(isRepeat) {
     const { type, image } = this.props.item;
     if (type === 'image') {
@@ -100,11 +105,14 @@ class ChatItem extends React.Component {
       const ratio = 120 / height;
       // eslint-disable-next-line
       const gifUrl = Bebo.getDevice() === 'android' ? webp || url : url;
-      return (<span className={`chat-item--inner--message--content ' ${this.state.imageLoaded ? 'is-loaded' : 'is-loading'}`}>
-        <div className="chat-item--inner--message--content--image">
-          <div style={{ backgroundImage: `url(${gifUrl.replace('http://', 'https://')})`, height: `${height * ratio}px`, width: `${width * ratio}px` }} />
-        </div>
-      </span>);
+      return (
+        <span className={`chat-item--inner--message--content ' ${this.state.imageLoaded ? 'is-loaded' : 'is-loading'}`}
+              data-media-url={gifUrl}
+              onClick={this.viewPhoto}>
+          <div className="chat-item--inner--message--content--image">
+            <div style={{ backgroundImage: `url(${gifUrl.replace('http://', 'https://')})`, height: `${height * ratio}px`, width: `${width * ratio}px` }} />
+          </div>
+        </span>);
     }
 
     var message = {__html: md.render(this.props.item.message)};
