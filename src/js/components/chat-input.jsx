@@ -193,6 +193,19 @@ class ChatInput extends React.Component {
     }
     return {}
   }
+  renderUploader() {
+    if (this.state.messageText.length) {
+      return;
+    }
+    return <Uploader ref="uploader"
+                     value={this.state.media}
+                     multiple={false}
+                     onBusy={this.handleUploading}
+                     onChange={this.handleMedia}
+                     showButton={true}
+                     itemClassName="media-upload-container"
+                     className="media-upload-media"/>
+  }
 
   renderActions() {
     return (<div className="chat-input--actions">
@@ -224,14 +237,7 @@ class ChatInput extends React.Component {
           onChange={this.handleInputChange}
           value={this.state.messageText}
         />
-        <Uploader ref="uploader"
-          value={this.state.media}
-          multiple={false}
-          onBusy={this.handleUploading}
-          onChange={this.handleMedia}
-          showButton={true}
-          itemClassName="media-upload-container"
-          className="media-upload-media"/>
+        {this.renderUploader()}
         <div onTouchStart={this.handleSendChat} onMouseDown={this.handleSendChat} className="send-button" style={this.calculateSendBtnStyle()}>
           <span>Send</span>
         </div>
