@@ -29,10 +29,11 @@
   @extend .flex-row;
   border-top: 1px solid $color-grey3;
   background-color:$color-white;
+  display:flex;
 }
 
 .chat-input--middle {
-  flex:1 1 auto;
+  flex-grow:1;
   padding: 0;
   padding-right: 20px;
   display:flex;
@@ -59,7 +60,7 @@
 .chat-input--right,
 .chat-input--left {
   flex:0 0 auto;
-  padding: calc-em(11px) calc-em(15px);
+  padding: calc-em(10px) calc-em(10px);
 }
 
 .chat-input--left {
@@ -132,13 +133,11 @@
 }
 
 .media-upload-container {
+    cursor:pointer;
     background-size: cover;
-    height: 32px;
-    width: 32px; 
-}
-
-.media-upload-container svg {
-    object-fit: contain;
-    height: 32px;
-    width: 32px; 
+    background-image: url('./assets/img/add-photo.png');
+    background-repeat:no-repeat;
+    background-position:center;
+    height: calc-em(27px);
+    width: calc-em(30px); 
 }

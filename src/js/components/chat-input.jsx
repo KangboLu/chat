@@ -154,11 +154,11 @@ class ChatInput extends React.Component {
     const m = data.result[0];
     // eslint-disable-next-line
     var message;
-    if (data.type === 'message') {
+    if (m.type === 'message') {
       message  = m.message.trim();
       message = _.split(message, "\n");
       message = message[0];
-    } else if (data.type === 'image') {
+    } else if (m.type === 'image') {
       message = "sent a new image";
     }
     
@@ -237,10 +237,13 @@ class ChatInput extends React.Component {
           onChange={this.handleInputChange}
           value={this.state.messageText}
         />
+      </div>
+      <div className="chat-input--right">
         {this.renderUploader()}
         <div onTouchStart={this.handleSendChat} onMouseDown={this.handleSendChat} className="send-button" style={this.calculateSendBtnStyle()}>
           <span>Send</span>
         </div>
+
       </div>
     </div>);
   }

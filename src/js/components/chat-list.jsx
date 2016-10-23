@@ -87,7 +87,6 @@ class ChatList extends React.Component {
   }
 
   loadMore(offset) {
-    console.log("loading more posts", offset);
     return this.getMessages(COUNT, offset);
   }
 
@@ -333,7 +332,7 @@ class ChatList extends React.Component {
     return (
       <div ref="chatListInner" className="chat-list--inner" onScroll={this.handleScroll} onClick={this.handleListClick}>
         <ul ref="chats" className="chat-list--inner--list">
-          {hasMore ?  <li style={{clear: 'both'}} className="loading">Loading ...</li> : ""}
+          {hasMore ?  <li style={{clear: 'both'}} className="loading"></li> : ""}
           {messages.map((item, i) => <ChatItem
             isAnchor={item.id===this.anchor_id}
             onAnchorRef={this.onAnchorRef}

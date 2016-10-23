@@ -216,7 +216,6 @@ class Upload extends React.Component {
       return;
     }
     return <div className={itemClassName} onClick={()=>this.onClick()}>
-            {cameraSvg}
            </div>;
   }
 
