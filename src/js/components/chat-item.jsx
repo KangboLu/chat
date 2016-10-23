@@ -110,7 +110,7 @@ class ChatItem extends React.Component {
               data-media-url={gifUrl}
               onClick={this.viewPhoto}>
           <div className="chat-item--inner--message--content--image">
-            <div style={{ backgroundImage: `url(${gifUrl.replace('http://', 'https://')})`, height: `${height * ratio}px`, width: `${width * ratio}px` }} />
+            <div style={{ backgroundImage: `url(${gifUrl.replace('http://', 'https://')})` }} />
           </div>
         </span>);
     }

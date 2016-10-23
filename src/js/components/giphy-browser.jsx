@@ -1,7 +1,6 @@
 import React from 'react';
 import GiphyGif from './giphy-gif.jsx';
 import SimpleFetch from 'react-simple-fetch';
-import Cluster from 'react-cluster';
 
 const loader = function loader() {
   return (<div className="loader">
@@ -204,7 +203,7 @@ class GiphyBrowser extends React.Component {
           </SimpleFetch>
         </div>
       ) : (
-        <Cluster className="gif-list-container" height={height || window.innerHeight} rowHeight={(window.innerWidth * 0.4)}>
+        <div className="gif-list-container">
           {categories.map((category, ind) => (
             <SimpleFetch key={ind} as="gif" path="data" url={`http://api.giphy.com/v1/gifs/${category.id}?api_key=dc6zaTOxFJmzC`}>
               <GiphyGif loader={loader()} onClick={() => { this.setState({ filter: category }); }} switchMode={this.props.switchMode} actingUser={this.props.actingUser}>
@@ -214,7 +213,7 @@ class GiphyBrowser extends React.Component {
               </GiphyGif>
             </SimpleFetch>)
           )}
-        </Cluster>
+        </div>
       )}
       <img className="giphy-attrib" src={giphyAtttrib} role="presentation" />
     </div>);

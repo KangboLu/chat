@@ -23,7 +23,7 @@ $pulse-duration: 750ms;
 }
 
 .loading {
-    position:absolute;
+    position:relative;
     left:50%;
     transform:translate(-50%, 0%);
     border-radius: 50%;

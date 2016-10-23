@@ -208,12 +208,15 @@
   position:relative;
   float:left;
   overflow: hidden;
+  cursor:pointer;
 }
 
 .chat-item--inner--message--content--image div{
-  background-size: contain;
+  height:calc-em(120px);
+  width:calc-em(120px);
+  background-size: cover;
   background-repeat: no-repeat;
-  max-width: 100%;
+  background-position:center;
 }
 
 
