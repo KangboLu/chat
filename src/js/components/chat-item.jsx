@@ -104,7 +104,10 @@ class ChatItem extends React.Component {
       const { webp, url, width, height } = image;
       const ratio = 120 / height;
       // eslint-disable-next-line
-      const gifUrl = Bebo.getDevice() === 'android' ? webp || url : url;
+      let gifUrl = Bebo.getDevice() === 'android' ? webp || url : url;
+      if (gifUrl.indexOf("imgdropt") !== -1) {
+        gifUrl = gifUrl + "?w=1024&h=1024&contain";
+      }
       return (
         <span className={`chat-item--inner--message--content ' ${this.state.imageLoaded ? 'is-loaded' : 'is-loading'}`}
               data-media-url={gifUrl}

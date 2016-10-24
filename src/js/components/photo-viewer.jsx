@@ -14,7 +14,7 @@ class PhotoViewer extends React.Component {
   }
 
   render() {
-    var bg = {backgroundImage: "url(" + this.props.media.mediaUrl + "?w=2049&h=2049)" };
+    var bg = {backgroundImage: "url(" + this.props.media.mediaUrl + "?w=2048&h=2048&contain)" };
     return (
       <div className="photo-viewer modal">
         <div className="photo-viewer-header">
