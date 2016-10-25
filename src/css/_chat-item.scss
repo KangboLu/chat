@@ -42,7 +42,7 @@
   width: calc-em(36px);
   height: calc-em(36px);
   background-color: $color-grey2;
-  margin: 0 calc-em(13px);
+  margin: calc-em(4px) calc-em(12px);
   border-radius: calc-em(8px);
   overflow:hidden;
   img {
@@ -88,10 +88,10 @@
   width:100%;
   position:relative;
   word-wrap: break-word;
-  line-height: 1.375;
+  line-height: 1.275;
   display: block;
   max-width: 80vw;
-  margin: 1px 0;
+  margin: calc-em(1px) 0;
   user-select:text;
   @include r_max($break-tablet-s) {
     font-size: calc-em(16px);
@@ -145,8 +145,8 @@
   }
   blockquote {
     border-left: 4px solid $color-grey2;
-    padding-left: calc-em(15px);
-    margin: 0 0 calc-em(15px) 0;
+    padding-left: calc-em(10px);
+    margin: calc-em(2px) calc-em(10px) calc-em(15px) 0;
     * {
       font-style: italic;
       font-family: Georgia, serif;
