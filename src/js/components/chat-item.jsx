@@ -109,8 +109,10 @@ class ChatItem extends React.Component {
     this.props.roster.forEach((user) => {
       if(message.indexOf(user.username)  > -1) {
         let regex = new RegExp('[a-z]|[A-Z]');
+        let beforeRegex = new RegExp('[a-z]|[A-Z]|[^@]');
         let afterName = message.indexOf(user.username) + user.username.length;
         if(regex.test(message[afterName])){ return message }
+        if(beforeRegex.test(message.indexOf(user.username)-1)){ return message }
         let checkName = user.username;
         if(message[message.indexOf(user.username)-1] === '@'){ checkName = '@' + user.username }
         let startMess = message.substring(0, message.indexOf(checkName));
