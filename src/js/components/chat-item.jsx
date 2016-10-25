@@ -107,18 +107,16 @@ class ChatItem extends React.Component {
       return message; 
     }
     this.props.roster.forEach((user) => {
-      if(message.indexOf(user.username)  > -1) {
-        let regex = new RegExp('[a-z]|[A-Z]');
-        let beforeRegex = new RegExp('[a-z]|[A-Z]|[^@]');
-        let afterName = message.indexOf(user.username) + user.username.length;
-        if(regex.test(message[afterName])){ return message }
-        if(beforeRegex.test(message.indexOf(user.username))){ return message }
-        let checkName = user.username;
-        if(message[message.indexOf(user.username)-1] === '@'){ checkName = '@' + user.username }
-        let startMess = message.substring(0, message.indexOf(checkName));
-        let name = message.substring(message.indexOf(checkName), message.indexOf(checkName) + checkName.length);
-        let endMess = message.substring(message.indexOf(checkName) + checkName.length);
-        message = startMess + "<span class='mention-name'>" + name + "</span>" + endMess;
+      var regexp = /(@\w*)/g;
+      var results = message.match(regexp);
+      if(!results){return}
+      for (var i = 0; i < results.length; i++) {
+        if('@'+user.username === results[i]){
+          let checkName = '@' + user.username;
+          let startMess = message.substring(0, message.indexOf(checkName));
+          let endMess = message.substring(message.indexOf(checkName) + checkName.length);
+          message = startMess + "<span class='mention-name'>" + checkName + "</span>" + endMess;
+        }
       }
     })
     return message;
