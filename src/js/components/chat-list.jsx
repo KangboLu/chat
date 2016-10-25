@@ -263,7 +263,7 @@ class ChatList extends React.Component {
       console.log(this.anchorRef.offsetTop);
       this.offsetTop = this.anchorRef.offsetTop;
     }
-    console.log("scrollTop", this.scrollTop, this.scrollHeight);
+    // console.log("scrollTop", this.scrollTop, this.scrollHeight);
   }
 
   handleScroll() {

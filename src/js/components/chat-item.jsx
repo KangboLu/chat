@@ -151,7 +151,6 @@ class ChatItem extends React.Component {
   }
 
   render() {
-    console.log('child render', this.props.roster);
     const { prevItem, item } = this.props;
     const isRepeat = (item.type !== 'image' && prevItem.user_id === item.user_id) && ((item.created_at-prevItem.created_at) < 60*60*1000);
     var onAnchorRef;
