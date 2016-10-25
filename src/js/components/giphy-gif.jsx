@@ -30,8 +30,8 @@ class GiphyGif extends React.Component {
 
 
   render() {
-    const { gif, actingUser, children, originalSize, key } = this.props;
-    const { username, user_id } = actingUser;
+    const { gif, me, children, originalSize, key } = this.props;
+    const { username, user_id } = me;
     const { url, webp } = gif.images.fixed_width_downsampled;
     // eslint-disable-next-line
     const gifUrl = Bebo.getDevice() === 'android' ? webp || url : url;
@@ -72,7 +72,7 @@ GiphyGif.displayName = 'GiphyGif';
 // Uncomment properties you need
 GiphyGif.propTypes = {
   gif: React.PropTypes.object,
-  actingUser: React.PropTypes.object.isRequired,
+  me: React.PropTypes.object.isRequired,
   switchMode: React.PropTypes.func.isRequired,
   onClick: React.PropTypes.func,
   children: React.PropTypes.element,
