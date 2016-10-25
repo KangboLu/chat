@@ -134,7 +134,7 @@ class ChatList extends React.Component {
         username: "Team Bebo",
         user_id: bot_user_id,
         user_image_url: "https://a.imgdropt.com/image/77e0224a-f44f-4a0a-8147-601347777c99",
-        message: "This chat is private to your group, you already know how chat works 🙂",
+        message: "This chat is private, you already know how chat works 🙂",
         users: [],
         created_dttm: new Date(),
         created_at,
