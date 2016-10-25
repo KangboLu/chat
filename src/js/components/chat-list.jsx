@@ -18,6 +18,7 @@ class ChatList extends React.Component {
       unloadedMessages: [],
       usersTypingCount: 0,
       hasMore: true,
+      roster: null,
     };
     if (!bot_user_id) {
       bot_user_id = "208ee4a33aca4b238648998e98fbb302";
@@ -63,6 +64,12 @@ class ChatList extends React.Component {
       this.loadMore(this.offset);
     }
     this.refs.chatListInner.scrollTop = this.refs.chatListInner.scrollHeight;
+    Bebo.Server.getRoster((err, data) => {
+      if(err){ console.log('err gettting roster')}
+        console.log('ROSTER DATA', data);
+      this.setState({roster: data });
+    });
+    // this.setState({roster: [{username: 'joshua'}, {username: 'bob'}] });
   }
 
   componentDidUpdate() {
@@ -334,6 +341,7 @@ class ChatList extends React.Component {
         <ul ref="chats" className="chat-list--inner--list">
           {hasMore ?  <li style={{clear: 'both'}} className="loading"></li> : ""}
           {messages.map((item, i) => <ChatItem
+            roster={this.state.roster}
             isAnchor={item.id===this.anchor_id}
             onAnchorRef={this.onAnchorRef}
             handleNewMessage={this.handleNewMessage}

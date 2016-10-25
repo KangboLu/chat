@@ -14,13 +14,14 @@ class ChatItem extends React.Component {
     super();
     this.state = {
       item: null,
-      imageLoaded: false,
+      imageLoaded: false
     };
     this.handleImageLoaded = this.handleImageLoaded.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
     this.renderTimestamp = this.renderTimestamp.bind(this);
     this.renderContent = this.renderContent.bind(this);
     this.viewPhoto = this.viewPhoto.bind(this);
+    this.checkForUsername = this.checkForUsername.bind(this);
   }
 
   componentWillMount() {
@@ -38,6 +39,9 @@ class ChatItem extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     // if (this.item.id !== nextState.item.id || this.item.updated_at !== this.item.updated_at) {
     if (this.props.item.id !== nextProps.item.id) {
+      return true;
+    }
+    if (this.props.roster !== nextProps.roster) {
       return true;
     }
     if (!this.state.item) {
@@ -98,6 +102,26 @@ class ChatItem extends React.Component {
     this.props.viewPhoto({"mediaUrl": e.currentTarget.dataset.mediaUrl});
   }
 
+  checkForUsername(message) {
+    if(!this.props.roster) { 
+      return message; 
+    }
+    this.props.roster.forEach((user) => {
+      if(message.indexOf(user.username)  > -1) {
+        let regex = new RegExp('[a-z]');
+        let afterName = message.indexOf(user.username) + user.username.length;
+        if(regex.test(message[afterName])){ return message }
+        let checkName = user.username;
+        if(message[message.indexOf(user.username)-1] === '@'){ checkName = '@' + user.username }
+        let startMess = message.substring(0, message.indexOf(checkName));
+        let name = message.substring(message.indexOf(checkName), message.indexOf(checkName) + checkName.length);
+        let endMess = message.substring(message.indexOf(checkName) + checkName.length);
+        message = startMess + "<span class='mention-name'>" + name + "</span>" + endMess;
+      }
+    })
+    return message;
+  }
+
   renderContent(isRepeat) {
     const { type, image } = this.props.item;
     if (type === 'image') {
@@ -119,13 +143,15 @@ class ChatItem extends React.Component {
     }
 
     var message = {__html: md.render(this.props.item.message)};
-    return <div className="chat-item--inner--message--content"
-                onClick={this.handleLinkClick} 
-                dangerouslySetInnerHTML={message}>
-           </div>
+    message.__html = this.checkForUsername(message.__html);
+    return (<div className="chat-item--inner--message--content"
+      onClick={this.handleLinkClick} 
+      dangerouslySetInnerHTML={message}>
+   </div>)
   }
 
   render() {
+    console.log('child render', this.props.roster);
     const { prevItem, item } = this.props;
     const isRepeat = (item.type !== 'image' && prevItem.user_id === item.user_id) && ((item.created_at-prevItem.created_at) < 60*60*1000);
     var onAnchorRef;
