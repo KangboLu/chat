@@ -199,14 +199,14 @@ class GiphyBrowser extends React.Component {
       {filter ? (
         <div style={filter ? { position: 'absolute', top: 0, left: 0 } : {}} className={filter ? 'gif-list-container' : ''}>
           <SimpleFetch loader={loader()} as="gif" path="data" url={`http://api.giphy.com/v1/gifs/search?q=${filter.q}&api_key=dc6zaTOxFJmzC`}>
-            <GiphyGif originalSize switchMode={this.props.switchMode} actingUser={this.props.actingUser} />
+            <GiphyGif originalSize switchMode={this.props.switchMode} me={this.props.me} />
           </SimpleFetch>
         </div>
       ) : (
         <div className="gif-list-container">
           {categories.map((category, ind) => (
             <SimpleFetch key={ind} as="gif" path="data" url={`http://api.giphy.com/v1/gifs/${category.id}?api_key=dc6zaTOxFJmzC`}>
-              <GiphyGif loader={loader()} onClick={() => { this.setState({ filter: category }); }} switchMode={this.props.switchMode} actingUser={this.props.actingUser}>
+              <GiphyGif loader={loader()} onClick={() => { this.setState({ filter: category }); }} switchMode={this.props.switchMode} me={this.props.me}>
                 <div className="giphy-gif--category-background">
                   <div className="giphy-gif--category-title">{category.q.replace(/\+/g, ' ')}</div>
                 </div>
@@ -225,7 +225,7 @@ GiphyBrowser.displayName = 'GiphyBrowser';
 // Uncomment properties you need
 GiphyBrowser.propTypes = {
   switchMode: React.PropTypes.func.isRequired,
-  actingUser: React.PropTypes.object.isRequired,
+  me: React.PropTypes.object.isRequired,
   style: React.PropTypes.object.isRequired,
 };
 // GiphyBrowser.defaultProps = {};

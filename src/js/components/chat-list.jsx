@@ -108,7 +108,20 @@ class ChatList extends React.Component {
     this.anchorRef = ref;
   }
 
-  getFakeWelcomeMessage() {
+  getFakeDMWelcomeMessage(widget, participants) {
+
+    console.log(participants);
+    let friends = _.filter(participants, (u) => u.user_id !== this.props.me.user_id);
+    friends = _.map(friends, "username");
+    let last = friends.pop();
+
+    let f = "";
+    if (friends.length >0) {
+      f = _.join(friends, ", ");
+      f = f + " and ";
+    }
+    f = f + last;
+    console.log(f);
     var created_at = Date.now();
     return [
       {
@@ -116,7 +129,62 @@ class ChatList extends React.Component {
         type: 'message',
         username: "Team Bebo",
         user_id: bot_user_id,
-        user_image_url: "https://a.imgdropt.com/image/f162ee07-f92a-44de-bb64-7d70c5dd0ce8",
+        user_image_url: "https://a.imgdropt.com/image/77e0224a-f44f-4a0a-8147-601347777c99",
+        message: `Welcome to your chat with ${f}!`,
+        users: [],
+        created_dttm: new Date(),
+        created_at,
+      },
+      {
+        id: uuid.v4(),
+        type: 'message',
+        username: "Team Bebo",
+        user_id: bot_user_id,
+        user_image_url: "https://a.imgdropt.com/image/77e0224a-f44f-4a0a-8147-601347777c99",
+        message: "This chat is private, you already know how chat works 🙂",
+        users: [],
+        created_dttm: new Date(),
+        created_at,
+      },
+      {
+        id: uuid.v4(),
+        type: 'message',
+        username: "Team Bebo",
+        user_id: bot_user_id,
+        user_image_url: "https://a.imgdropt.com/image/77e0224a-f44f-4a0a-8147-601347777c99",
+        message: "Have a nice day!",
+        users: [],
+        created_dttm: new Date(),
+        created_at,
+      }
+    ];
+  }
+
+  getFakeWelcomeMessage() {
+    return Bebo.Room.get().then((widget) => {
+        if (widget.participants && widget.participants.length > 0) {
+          return Bebo.User.getUsers(widget.participants)
+            .then((participants) => {
+              return this.getFakeDMWelcomeMessage(widget, participants);
+            });
+        } else {
+          return this.getFakeGroupMessage();
+        }
+      }).then((messages) => {
+        this.store = messages;
+        this.setState({"messages": messages});
+      });
+  }
+
+  getFakeGroupMessage() {
+    var created_at = Date.now();
+    return [
+      {
+        id: uuid.v4(),
+        type: 'message',
+        username: "Team Bebo",
+        user_id: bot_user_id,
+        user_image_url: "https://a.imgdropt.com/image/77e0224a-f44f-4a0a-8147-601347777c99",
         message: "Welcome to your group chat!",
         users: [],
         created_dttm: new Date(),
@@ -127,7 +195,7 @@ class ChatList extends React.Component {
         type: 'message',
         username: "Team Bebo",
         user_id: bot_user_id,
-        user_image_url: "https://a.imgdropt.com/image/f162ee07-f92a-44de-bb64-7d70c5dd0ce8",
+        user_image_url: "https://a.imgdropt.com/image/77e0224a-f44f-4a0a-8147-601347777c99",
         message: "This chat is private to your group, you already know how chat works 🙂",
         users: [],
         created_dttm: new Date(),
@@ -138,14 +206,15 @@ class ChatList extends React.Component {
         type: 'message',
         username: "Team Bebo",
         user_id: bot_user_id,
-        user_image_url: "https://a.imgdropt.com/image/f162ee07-f92a-44de-bb64-7d70c5dd0ce8",
-        message: "I'l be dropping out now",
+        user_image_url: "https://a.imgdropt.com/image/77e0224a-f44f-4a0a-8147-601347777c99",
+        message: "Have a nice day!",
         users: [],
         created_dttm: new Date(),
         created_at,
       }
     ];
   }
+
 
   getMessages(count, offset) {
 
@@ -173,7 +242,8 @@ class ChatList extends React.Component {
           state.hasMore = hasMore;
         }
         if (data.result.length === 0 && options.offset === 0 && options.count > 0) {
-          that.store = that.getFakeWelcomeMessage();
+          that.store = [];
+          that.getFakeWelcomeMessage();
         } else {
           that.store = _.unionBy(data.result, that.store, "id");
           that.store = _.orderBy(that.store, "created_dttm", "asc");
@@ -233,7 +303,7 @@ class ChatList extends React.Component {
 
     if (!this.state.scrolledPastFirstMessage) {
       this.addNewMessages([message]);
-      if (message.user_id === this.props.actingUser.user_id) {
+      if (message.user_id === this.props.me.user_id) {
         this.scrollChatToBottom();
       }
     } else {
@@ -253,7 +323,7 @@ class ChatList extends React.Component {
   }
 
   handlePresenceUpdates(user) {
-    if (user.started_typing === this.props.actingUser.user_id || user.stopped_typing === this.props.actingUser.user_id) {
+    if (user.started_typing === this.props.me.user_id || user.stopped_typing === this.props.me.user_id) {
       return;
     }
     if(this.presenceTimeout) {
@@ -371,7 +441,7 @@ ChatList.displayName = 'ChatList';
 // Uncomment properties you need
 ChatList.propTypes = {
   blurChat: React.PropTypes.func.isRequired,
-  actingUser: React.PropTypes.object.isRequired,
+  me: React.PropTypes.object.isRequired,
 };
 // ChatList.defaultProps = {};
 

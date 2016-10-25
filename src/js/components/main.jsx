@@ -11,7 +11,7 @@ class App extends React.Component {
     super();
     this.state = {
       blurInput: true,
-      actingUser: {},
+      me: {user_id: Bebo.User.getId()},
       mode: 'text',
       open: false,
       closing: false,
@@ -32,7 +32,7 @@ class App extends React.Component {
     var that = this;
     Bebo.User.get('me')
     .then(function(user) {
-      that.setState({ actingUser: user});
+      that.setState({ me: user});
       if (!user.username) {
         that.delay += 500;
         setTimeout(that.getMe, that.delay);
@@ -78,13 +78,13 @@ class App extends React.Component {
     return (
       <div className="chat">
         <div className="chat-upper" style={this.state.mode === 'gif' ? { transform: 'translate3d(8.125rem,0,0)' } : {}}>
-          <ChatList viewPhoto={this.viewPhoto} blurChat={this.blurInput} actingUser={this.state.actingUser} />
+          <ChatList viewPhoto={this.viewPhoto} blurChat={this.blurInput} me={this.state.me} />
           <ChatBackground />
         </div>
         <div className="chat-lower" style={this.state.mode === 'gif' ? { transform: 'translate3d(8.125rem,0,0)' } : {}}>
-          <ChatInput me={this.state.actingUser} blurChat={this.state.blurInput} switchMode={this.handleSwitchMode} setChatInputState={this.blurInput} />
+          <ChatInput me={this.state.me} blurChat={this.state.blurInput} switchMode={this.handleSwitchMode} setChatInputState={this.blurInput} />
         </div>
-        {(giphyOpen || giphyClosing || this.state.mode === 'gif') && <GiphyBrowser style={giphyOpen ? { transform: 'translate3d(0,0,0)' } : {}} actingUser={this.state.actingUser} switchMode={this.handleSwitchMode} />}
+        {(giphyOpen || giphyClosing || this.state.mode === 'gif') && <GiphyBrowser style={giphyOpen ? { transform: 'translate3d(0,0,0)' } : {}} me={this.state.me} switchMode={this.handleSwitchMode} />}
         {this.renderPhotoViewer()}
       </div>);
   }

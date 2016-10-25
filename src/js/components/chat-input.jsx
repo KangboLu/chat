@@ -137,13 +137,13 @@ class ChatInput extends React.Component {
       // TODO mention stuff in users[]
       // eslint-disable-next-line
       Bebo.Db.save('messages', message, this.broadcastChat);
-      Bebo.Server.notifyUsersFromString(message.message)
-      .then((resp) =>{
-        console.log('sent notifications in chat');
-      })
-      .catch((err) => {
-        console.log('error sending notifications in chat');
-      })
+      // Bebo.Server.notifyUsersFromString(message.message)
+      // .then((resp) =>{
+      //   console.log('sent notifications in chat');
+      // })
+      // .catch((err) => {
+      //   console.log('error sending notifications in chat');
+      // })
       this.resetTextarea();
     } else {
       console.warn('no message, returning');
