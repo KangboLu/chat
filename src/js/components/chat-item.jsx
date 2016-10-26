@@ -22,6 +22,7 @@ class ChatItem extends React.Component {
     this.renderContent = this.renderContent.bind(this);
     this.viewPhoto = this.viewPhoto.bind(this);
     this.checkForUsername = this.checkForUsername.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentWillMount() {
@@ -54,6 +55,10 @@ class ChatItem extends React.Component {
       return true;
     }
     return false;
+  }
+
+  deleteItem(e) {
+    this.props.deleteItem(this.state.item);
   }
 
   handleImageLoaded() {
@@ -150,7 +155,14 @@ class ChatItem extends React.Component {
    </div>)
   }
 
+
   render() {
+
+    var itemDelete;
+    if (this.props.me.user_id === this.props.item.user_id || this.props.admin) {
+      itemDelete = <div className="chat-delete-btn" data-post-id={this.props.item.id} onClick={this.deleteItem}></div>
+    }
+
     const { prevItem, item } = this.props;
     const isRepeat = (item.type !== 'image' && prevItem.user_id === item.user_id) && ((item.created_at-prevItem.created_at) < 60*60*1000);
     var onAnchorRef;
@@ -175,6 +187,7 @@ class ChatItem extends React.Component {
             {this.renderContent(isRepeat)}
           </div>
         </div>
+        {itemDelete}
       </div>
     </li>);
   }

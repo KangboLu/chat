@@ -251,6 +251,7 @@ class ChatList extends React.Component {
             that.anchor_id = that.store[that.store.length-1].id;
           }
         }
+        that.store = _.filter(that.store, function(i) { return !i.deleted_dttm});
         state.messages = that.store;
         that.setState(state);
       }).catch((err) => console.log('error getting list:', err, err.stack));
@@ -292,9 +293,20 @@ class ChatList extends React.Component {
     if (data.type === 'chat_sent') {
       this.handleMessageEvent(data.message);
     }
+    if (data.type === 'chat_delete') {
+      this.handleMessageDeleteEvent(data.message);
+    }
     if (data.type === 'chat_presence') {
       this.handlePresenceUpdates(data.presence);
     }
+  }
+
+  handleMessageDeleteEvent(message) {
+    console.log("message deleted event", message);
+    this.store = _.unionBy([message], this.store, "id");
+    this.store = _.filter(this.store, function(i) { return !i.deleted_dttm});
+    this.store = _.orderBy(this.store, "created_dttm", "asc");
+    this.setState({messages: this.store});
   }
 
   handleMessageEvent(message) {
@@ -417,6 +429,9 @@ class ChatList extends React.Component {
             handleNewMessage={this.handleNewMessage}
             viewPhoto={this.props.viewPhoto}
             item={item} prevItem={messages[i - 1] || {}}
+            admin={this.props.admin}
+            me={this.props.me}
+            deleteItem={this.props.deleteItem}
             key={item.id} />)}
           {this.renderNoChatsMessage}
         </ul>
