@@ -66,8 +66,10 @@ class ChatItem extends React.Component {
   }
 
   handleLinkClick(e) {
-    e.preventDefault();
-    Bebo.openURI(e.target.href);
+    if (e.target.href) {
+      e.preventDefault();
+      Bebo.openURI(e.target.href);
+    }
   }
 
   renderAvatar(isRepeat) {
@@ -155,7 +157,6 @@ class ChatItem extends React.Component {
    </div>)
   }
 
-
   render() {
 
     var itemDelete;
@@ -169,7 +170,8 @@ class ChatItem extends React.Component {
     if (this.props.isAnchor) {
       onAnchorRef = this.props.onAnchorRef
     }
-    return (<li className="chat-item" ref={onAnchorRef} style={isRepeat ? { padding: 0 } : {}}>
+    return (<li className="chat-item"
+                ref={onAnchorRef} style={isRepeat ? { padding: 0 } : {}}>
       <div className="chat-item--inner">
         <div className="chat-item--inner--left">
           <div className="chat-item--inner--avatar" style={isRepeat ? { visibility: 'hidden', height: 'auto' } : {}}>
