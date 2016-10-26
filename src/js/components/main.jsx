@@ -31,6 +31,7 @@ class App extends React.Component {
   componentWillMount() {
     // eslint-disable-next-line
     this.getMe();
+    this.getServer();
   }
 
   getServer() {
