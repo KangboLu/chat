@@ -10,6 +10,16 @@
   }
 }
 
+.is-desktop {
+  .chat-item {
+    &:hover {
+      .chat-delete-btn {
+        display: block;
+      }
+    }
+  }
+}
+
 .chat-item--inner {
   width:100%;
   display:flex;
@@ -201,7 +211,6 @@
   }
 }
 
-
 .chat-item--inner--message--content--image {
   max-width:70%;
   display:block;
@@ -223,5 +232,15 @@
   color: $color-brand;
 }
 
+.chat-delete-btn {
+  background-image: url(./assets/img/delete.png);
+  background-size: calc-em(12px) calc-em(16px);
+  width: calc-em(12px);
+  height: calc-em(16px);
+  padding: 5px;
+  margin-right: 30px;
+  display: none;
+  cursor: pointer;
+}
 
 

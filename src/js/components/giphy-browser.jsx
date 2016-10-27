@@ -189,7 +189,7 @@ class GiphyBrowser extends React.Component {
   }
 
   render() {
-    const { categories, filter, height } = this.state;
+    const { categories, filter } = this.state;
     const { style } = this.props;
     return (<div className="giphy-browser" style={style}>
       <div className="giphy-nav-title" onClick={filter ? (() => { this.setState({ filter: null }); }) : (() => {})}>
