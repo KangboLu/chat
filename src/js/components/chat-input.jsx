@@ -1,9 +1,13 @@
-import React from 'react';
+
+import striptags from 'striptags';
 import uuid from 'node-uuid'
 
+import React from 'react';
 import Remarkable from 'remarkable';
-import striptags from 'striptags';
 import Uploader from './uploader.jsx';
+import _ from 'lodash';
+
+const Bebo = window.Bebo;
 
 var md = new Remarkable({html: false, breaks: false, linkify: false});
 
@@ -42,9 +46,9 @@ class ChatInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.blurChat) {
+    if (nextProps.blurInput) {
       this.refs.textarea.blur();
-    } else if (!nextProps.blurChat) {
+    } else if (!nextProps.blurInput) {
       this.refs.textarea.focus();
     }
   }

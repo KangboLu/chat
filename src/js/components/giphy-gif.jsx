@@ -1,6 +1,8 @@
 import React from 'react';
 import uuid from 'node-uuid'
 
+const Bebo = window.Bebo;
+
 class GiphyGif extends React.Component {
 
   constructor() {

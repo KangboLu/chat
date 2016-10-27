@@ -1,7 +1,9 @@
-import React from 'react';
-import ChatItem from './chat-item.jsx';
 
+import React from 'react';
+import _ from 'lodash';
 import uuid from 'node-uuid';
+import ChatItem from './chat-item.jsx';
+const Bebo = window.Bebo;
 
 const COUNT=30;
 var bot_user_id;
@@ -12,6 +14,7 @@ class ChatList extends React.Component {
     super();
     this.state = {
       maxCount: 50,
+      showActionsForItem: null,
       scrolledPastFirstMessage: false,
       isScrolling: false,
       messages: [],
@@ -66,7 +69,7 @@ class ChatList extends React.Component {
     this.refs.chatListInner.scrollTop = this.refs.chatListInner.scrollHeight;
     Bebo.Server.getRoster((err, data) => {
       if(err){ console.log('err gettting roster')}
-        console.log('ROSTER DATA', data);
+        // console.log('ROSTER DATA', data);
       this.setState({roster: data });
     });
     // this.setState({roster: [{username: 'joshua'}, {username: 'bob'}] });
@@ -97,12 +100,12 @@ class ChatList extends React.Component {
     return this.getMessages(COUNT, offset);
   }
 
-  keepScrollPosition() {
-    if (this.scrollTop !== 0) {
-      this.scrollTarget = this.scrollTop + ( this.refs.chatListInner.scrollHeight - this.scrollHeight);
-      this.refs.chatListInner.scrollTop = this.scrollTarget;
-    }
-  }
+  // keepScrollPosition() {
+  //   if (this.scrollTop !== 0) {
+  //     this.scrollTarget = this.scrollTop + ( this.refs.chatListInner.scrollHeight - this.scrollHeight);
+  //     this.refs.chatListInner.scrollTop = this.scrollTarget;
+  //   }
+  // }
 
   onAnchorRef(ref) {
     this.anchorRef = ref;
@@ -110,7 +113,6 @@ class ChatList extends React.Component {
 
   getFakeDMWelcomeMessage(widget, participants) {
 
-    console.log(participants);
     let friends = _.filter(participants, (u) => u.user_id !== this.props.me.user_id);
     friends = _.map(friends, "username");
     let last = friends.pop();
@@ -121,7 +123,6 @@ class ChatList extends React.Component {
       f = f + " and ";
     }
     f = f + last;
-    console.log(f);
     var created_at = Date.now();
     return [
       {
@@ -261,7 +262,7 @@ class ChatList extends React.Component {
     this.scrollTop = this.refs.chatListInner.scrollTop;
     this.scrollHeight = this.refs.chatListInner.scrollHeight;
     if (this.anchorRef) {
-      console.log(this.anchorRef.offsetTop);
+      // console.log(this.anchorRef.offsetTop);
       this.offsetTop = this.anchorRef.offsetTop;
     }
     // console.log("scrollTop", this.scrollTop, this.scrollHeight);
@@ -302,7 +303,6 @@ class ChatList extends React.Component {
   }
 
   handleMessageDeleteEvent(message) {
-    console.log("message deleted event", message);
     this.store = _.unionBy([message], this.store, "id");
     this.store = _.filter(this.store, function(i) { return !i.deleted_dttm});
     this.store = _.orderBy(this.store, "created_dttm", "asc");
@@ -379,19 +379,19 @@ class ChatList extends React.Component {
     });
   }
 
-
   handleNewMessage() {
     if (!this.state.scrolledPastFirstMessage) {
       this.scrollChatToBottom();
     }
   }
 
-  handleListClick() {
-    this.props.blurChat();
+  handleListClick(e) {
+    this.props.setChatInputState(false);
+    // this.setState({showActionsForItem: null});
   }
 
-  // Renders
 
+  // Renders
   renderNoChatsMessage() {
     if (!this.state.messages || this.state.messages.length === 0) {
       return <div key="nope" className="chat-list--no-messages" />;
@@ -427,6 +427,8 @@ class ChatList extends React.Component {
             isAnchor={item.id===this.anchor_id}
             onAnchorRef={this.onAnchorRef}
             handleNewMessage={this.handleNewMessage}
+            toggleActionsForItem={this.props.toggleActionsForItem}
+            showActionsForItem={this.props.showActionsForItem}
             viewPhoto={this.props.viewPhoto}
             item={item} prevItem={messages[i - 1] || {}}
             admin={this.props.admin}
@@ -440,7 +442,7 @@ class ChatList extends React.Component {
   }
 
   render() {
-    const count = this.state.usersTypingCount;
+    // const count = this.state.usersTypingCount;
     return (
       <div className="chat-list">
         {this.renderMessagesBadge()}
@@ -455,7 +457,7 @@ ChatList.displayName = 'ChatList';
 
 // Uncomment properties you need
 ChatList.propTypes = {
-  blurChat: React.PropTypes.func.isRequired,
+  setChatInputState: React.PropTypes.func.isRequired,
   me: React.PropTypes.object.isRequired,
 };
 // ChatList.defaultProps = {};

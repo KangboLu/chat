@@ -1,8 +1,9 @@
+import Moment from 'moment';
 import React from 'react';
-import moment from 'moment';
-import Linkify from '../utils/better-linkify';
-
 import Remarkable from 'remarkable';
+
+var isMobile = true;
+const Bebo = window.Bebo;
 
 var md = new Remarkable({html: false,
                          breaks: true,
@@ -14,8 +15,9 @@ class ChatItem extends React.Component {
     super();
     this.state = {
       item: null,
-      imageLoaded: false
+      imageLoaded: false,
     };
+    isMobile = Bebo.Utils.isMobile();
     this.handleImageLoaded = this.handleImageLoaded.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
     this.renderTimestamp = this.renderTimestamp.bind(this);
@@ -23,6 +25,7 @@ class ChatItem extends React.Component {
     this.viewPhoto = this.viewPhoto.bind(this);
     this.checkForUsername = this.checkForUsername.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.toggleActions = this.toggleActions.bind(this);
   }
 
   componentWillMount() {
@@ -38,11 +41,14 @@ class ChatItem extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // if (this.item.id !== nextState.item.id || this.item.updated_at !== this.item.updated_at) {
     if (this.props.item.id !== nextProps.item.id) {
       return true;
     }
     if (this.props.roster !== nextProps.roster) {
+      return true;
+    }
+    if ((this.props.showActionsForItem === this.props.item.id)
+        !== (nextProps.showActionsForItem === nextProps.item.id)) {
       return true;
     }
     if (!this.state.item) {
@@ -80,7 +86,7 @@ class ChatItem extends React.Component {
     const size = 288; // use default profile image size so we may cache it
     var url = item.user_image_url;
     if (url) {
-      url = url + "?h=${size}&w=${size}";
+      url = `${url}?h=${size}&w=${size}`;
     } else {
       url = `${Bebo.getImageUrl()}image/user/${item.user_id}?h=${size}&w=${size}`;
     }
@@ -98,7 +104,7 @@ class ChatItem extends React.Component {
   }
 
   timestampToString(t) {
-    var m = moment(t);
+    var m = Moment(t);
     if (m.isBefore(new Date(), 'day')) {
       return m.format('lll');
     }
@@ -132,8 +138,7 @@ class ChatItem extends React.Component {
   renderContent(isRepeat) {
     const { type, image } = this.props.item;
     if (type === 'image') {
-      const { webp, url, width, height } = image;
-      const ratio = 120 / height;
+      const {webp, url} = image;
       // eslint-disable-next-line
       let gifUrl = Bebo.getDevice() === 'android' ? webp || url : url;
       if (gifUrl.indexOf("imgdropt") !== -1) {
@@ -157,11 +162,22 @@ class ChatItem extends React.Component {
    </div>)
   }
 
+  toggleActions(e) {
+    // FIXME only if keyboard is closed
+    // console.log("showActions:" + !this.state.showActions);
+    // this.setState({showActions: !this.state.showActions});
+    this.props.toggleActionsForItem(e, this.props.item.id);
+  }
+
   render() {
 
     var itemDelete;
     if (this.props.me.user_id === this.props.item.user_id || this.props.admin) {
-      itemDelete = <div className="chat-delete-btn" data-post-id={this.props.item.id} onClick={this.deleteItem}></div>
+      var style;
+      if (isMobile && this.props.showActionsForItem === this.props.item.id) {
+        style = { display: "block" };
+      }
+      itemDelete = <div style={style} className="chat-delete-btn" data-post-id={this.props.item.id} onClick={this.deleteItem}></div>
     }
 
     const { prevItem, item } = this.props;
@@ -171,6 +187,7 @@ class ChatItem extends React.Component {
       onAnchorRef = this.props.onAnchorRef
     }
     return (<li className="chat-item"
+                onClick={this.toggleActions}
                 ref={onAnchorRef} style={isRepeat ? { padding: 0 } : {}}>
       <div className="chat-item--inner">
         <div className="chat-item--inner--left">

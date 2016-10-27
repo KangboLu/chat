@@ -1,6 +1,9 @@
 import React from 'react';
 import LinkifyIt from 'linkify-it';
 import tlds from 'tlds';
+
+const Bebo = window.Bebo;
+
 // import Iframely from './Iframely';
 
 const linkify = new LinkifyIt();
@@ -54,6 +57,7 @@ class Linkify extends React.Component {
       }
       // Shallow update values that specified the match
       let props = {href: match.url, key: `parse${this.parseCounter}match${idx}`};
+      // eslint-disable-next-line
       for (let key in this.props.properties) {
         let val = this.props.properties[key];
         if (val === Linkify.MATCH) {
