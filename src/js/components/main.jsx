@@ -5,14 +5,14 @@ import ChatInput from './chat-input.jsx';
 import ChatList from './chat-list.jsx';
 import GiphyBrowser from './giphy-browser.jsx';
 import PhotoViewer from './photo-viewer.jsx';
-
-const Bebo = window.Bebo;
+import {withBebo} from 'bebo-react';
 
 var isMobile = true;
 class App extends React.Component {
 
   constructor(props, context) {
     super(props, context);
+    isMobile = Bebo.Utils.isMobile();
     this.state = {
       blurInput: true,
       me: {user_id: Bebo.User.getId()},
@@ -21,9 +21,7 @@ class App extends React.Component {
       open: false,
       modal: null,
       closing: false,
-
     };
-    isMobile = Bebo.Utils.isMobile();
     this.setChatInputState = this.setChatInputState.bind(this);
     this.handleSwitchMode = this.handleSwitchMode.bind(this);
     this.getMe = this.getMe.bind(this);
@@ -34,7 +32,6 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // eslint-disable-next-line
     this.getMe();
     this.getServer();
   }
@@ -196,4 +193,5 @@ App.displayName = 'App';
 // App.propTypes = {};
 // App.defaultProps = {};
 
-export default App;
+export default withBebo(App);
+

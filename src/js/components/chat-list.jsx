@@ -3,7 +3,6 @@ import React from 'react';
 import _ from 'lodash';
 import uuid from 'node-uuid';
 import ChatItem from './chat-item.jsx';
-const Bebo = window.Bebo;
 
 const COUNT=30;
 var bot_user_id;

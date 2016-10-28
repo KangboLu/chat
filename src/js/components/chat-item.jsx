@@ -3,8 +3,6 @@ import React from 'react';
 import Remarkable from 'remarkable';
 
 var isMobile = true;
-const Bebo = window.Bebo;
-
 var md = new Remarkable({html: false,
                          breaks: true,
                          linkify: true});
@@ -17,7 +15,6 @@ class ChatItem extends React.Component {
       item: null,
       imageLoaded: false,
     };
-    isMobile = Bebo.Utils.isMobile();
     this.handleImageLoaded = this.handleImageLoaded.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
     this.renderTimestamp = this.renderTimestamp.bind(this);
@@ -29,6 +26,7 @@ class ChatItem extends React.Component {
   }
 
   componentWillMount() {
+    isMobile = Bebo.Utils.isMobile();
     const obj = this.props.item;
     if (this.props.item.username === '') {
       obj.username = obj.user_id.substr(0, 7);

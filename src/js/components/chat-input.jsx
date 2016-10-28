@@ -7,8 +7,6 @@ import Remarkable from 'remarkable';
 import Uploader from './uploader.jsx';
 import _ from 'lodash';
 
-const Bebo = window.Bebo;
-
 var md = new Remarkable({html: false, breaks: false, linkify: false});
 
 class ChatInput extends React.Component {

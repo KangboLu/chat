@@ -3,7 +3,6 @@ import DropZone from 'react-dropzone';
 import LoadImage from 'blueimp-load-image';
 import uuid from 'node-uuid';
 import _ from 'lodash';
-const Bebo = window.Bebo;
 
 /*
  * value: list of media

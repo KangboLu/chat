@@ -2,8 +2,6 @@ import React from 'react';
 import LinkifyIt from 'linkify-it';
 import tlds from 'tlds';
 
-const Bebo = window.Bebo;
-
 // import Iframely from './Iframely';
 
 const linkify = new LinkifyIt();

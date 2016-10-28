@@ -23,6 +23,10 @@ module.exports = {
     node: true
   },
 
+  globals: {
+    Bebo: true
+  },
+
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',
